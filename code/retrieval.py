@@ -11,6 +11,7 @@ from dictionary import Dictionary
 from inverted_index import InMemoryInvertedIndex
 from params import FLAGS
 from snrm import SNRM
+import pickle as pkl
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)

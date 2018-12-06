@@ -84,7 +84,7 @@ with tf.Session(graph=snrm.graph) as session:
     if not FLAGS.experiment_mode:
         num_steps = FLAGS.num_train_steps
         average_loss = 0
-        for step in xrange(num_steps):
+        for step in range(num_steps):
             query, doc1, doc2, labels = generate_batch(FLAGS.batch_size, 'train')
             labels = np.array(labels)
             labels = np.concatenate(
@@ -102,7 +102,7 @@ with tf.Session(graph=snrm.graph) as session:
             if step % FLAGS.validate_every_n_steps == 0:
                 valid_loss = 0.
                 valid_id = 0
-                for valid_step in xrange(FLAGS.num_valid_steps):
+                for valid_step in range(FLAGS.num_valid_steps):
                     query, doc1, doc2, labels = generate_batch(FLAGS.batch_size, 'valid')
                     labels = np.array(labels)
                     labels = np.concatenate(
