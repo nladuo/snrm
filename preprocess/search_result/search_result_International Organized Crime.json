@@ -1,0 +1,655 @@
+{
+	"took": 23,
+	"timed_out": false,
+	"_shards": {
+		"total": 1,
+		"successful": 1,
+		"skipped": 0,
+		"failed": 0
+	},
+	"hits": {
+		"total": 96423,
+		"max_score": 21.942015,
+		"hits": [{
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "LA112489-0141",
+			"_score": 21.942015,
+			"_source": {
+				"id": "LA112489-0141",
+				"text": "\nA parliamentary commission accused Swiss prosecutors today of doing little to \nstop drug and money-laundering international networks from pumping billions of \ndollars through Swiss companies. \n\n\nIt said Swiss justice authorities were too soft on organized crime and even \nfailed to probe charges that Nazi war criminal Klaus Barbie was using cocaine \nprofits to buy military hardware for Bolivia. \n\n\n\"The threat posed by organized crime has been recognized too late by the \nfederal prosecutor's office,\" the special investigative commission report said. \n\"The fight against international drug traders and money-laundering has been \nassigned too little importance.\" \n\n"
+			},
+			"_explanation": {
+				"value": 21.942015,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.8806467,
+					"description": "weight(text:international in 498) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.8806467,
+						"description": "score(LMJelinekMercerSimilarity, doc=498, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 8.379914,
+					"description": "weight(text:organized in 498) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 8.379914,
+						"description": "score(LMJelinekMercerSimilarity, doc=498, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.6814537,
+					"description": "weight(text:crime in 498) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.6814537,
+						"description": "score(LMJelinekMercerSimilarity, doc=498, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-41684",
+			"_score": 21.273453,
+			"_source": {
+				"id": "FBIS4-41684",
+				"text": "BFN \n [Report from RIA, POSTFACTUM, and INTERFAX column: \"Yerin \nWent To Combat Foreign Crime\"] \n  [Text] On Friday Viktor Yerin, Russian minister of \ninternal affairs, flew to Switzerland, where he will hold talks \nfor the first time on establishing contacts with that country's \nlaw-enforcement organs. The Russian Federation Ministry of \nInternal Affairs Public Relations Center has reported that the \nfight against international organized crime will be the main \nsubject of the talks. \n  At the beginning of this week V. Yerin visited Vienna at the \ninvitation of Austria's minister for the interior. Questions of \nstrengthening the two departments' cooperation in the fight \nagainst international crime, the drugs business, and crime in \nthe financial and economic sphere were discussed during the trip. \n"
+			},
+			"_explanation": {
+				"value": 21.273453,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.658201,
+					"description": "weight(text:international in 115533) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.658201,
+						"description": "score(LMJelinekMercerSimilarity, doc=115533, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.463968,
+					"description": "weight(text:organized in 115533) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.463968,
+						"description": "score(LMJelinekMercerSimilarity, doc=115533, freq=1.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 8.151284,
+					"description": "weight(text:crime in 115533) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 8.151284,
+						"description": "score(LMJelinekMercerSimilarity, doc=115533, freq=4.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-64950",
+			"_score": 20.96944,
+			"_source": {
+				"id": "FBIS4-64950",
+				"text": "BFN \n  [Text] Turkey and Jordan will cooperate in the struggle \nagainst narcotics smuggling and terrorism. An agreement was \nsigned in Ankara today between Turkey and Jordan for the \ncooperation in the struggle against narcotics and barbiturates \nsmuggling, international terrorism, and organized crime. During \nthe signing ceremony, Interior Minister Nahit Mentese said that \nthe cooperation envisaged in the agreement will contribute to \nthe development of relations in other fields as well. \n  [Begin Mentese recording] This agreement will result in \neffective and comprehensive cooperation in the struggle against \ninternational narcotics smuggling, international terrorism, and \nother organized crime. It has also been decided to establish a \njoint committee to be comprised of the representatives of the \ntwo sides with the aim of supervising the implementation of this \ncooperation and eliminating its shortcomings. \n  Moreover, under the agreement, our countries will exchange \nexperts as well as information and documents. [end recording] \n  In turn, Jordanian Interior Minister Salamah Hammad said \nthat \nthe agreement will further increase bilateral relations. \n"
+			},
+			"_explanation": {
+				"value": 20.96944,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.8267345,
+					"description": "weight(text:international in 178901) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.8267345,
+						"description": "score(LMJelinekMercerSimilarity, doc=178901, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.9205155,
+					"description": "weight(text:organized in 178901) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.9205155,
+						"description": "score(LMJelinekMercerSimilarity, doc=178901, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.2221904,
+					"description": "weight(text:crime in 178901) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.2221904,
+						"description": "score(LMJelinekMercerSimilarity, doc=178901, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-68087",
+			"_score": 20.96944,
+			"_source": {
+				"id": "FBIS4-68087",
+				"text": "BFN \n [Announcer-read report over video] \n  [Text] Turkey and Jordan will cooperate in the struggle \nagainst narcotics smuggling and terrorism. An agreement was \nsigned in Ankara today between Turkey and Jordan for the \ncooperation in the struggle against narcotics and barbiturates \nsmuggling, international terrorism, and organized crime. During \nthe signing ceremony, Interior Minister Nahit Mentese said that \nthe cooperation envisaged in the agreement will contribute to \nthe development of relations in other fields as well. \n  [Begin Mentese recording] This agreement will result in \neffective and comprehensive cooperation in the struggle against \ninternational narcotics smuggling, international terrorism, and \nother organized crime. It has also been decided to establish a \njoint committee to be comprised of the representatives of the \ntwo sides with the aim of supervising the implementation of this \ncooperation and eliminating its shortcomings. \n  Moreover, under the agreement, our countries will exchange \nexperts as well as information and documents. [end recording] \n  In turn, Jordanian Interior Minister Salamah Hammad said \nthat \nthe agreement will further increase bilateral relations. \n"
+			},
+			"_explanation": {
+				"value": 20.96944,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.8267345,
+					"description": "weight(text:international in 179475) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.8267345,
+						"description": "score(LMJelinekMercerSimilarity, doc=179475, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.9205155,
+					"description": "weight(text:organized in 179475) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.9205155,
+						"description": "score(LMJelinekMercerSimilarity, doc=179475, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.2221904,
+					"description": "weight(text:crime in 179475) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.2221904,
+						"description": "score(LMJelinekMercerSimilarity, doc=179475, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-42793",
+			"_score": 20.565449,
+			"_source": {
+				"id": "FBIS4-42793",
+				"text": "BFN \n  [Text] Cyprus and Egypt signed a security agreement this \nmorning aimed at combating organized crime, drug trafficking, \nand international terrorism. The agreement was signed by \nJustice and Public Order Minister Alekos Egangelou and by Nassar \nZahir, Egypt's assistant interior minister, who began a five-day \nvisit to Cyprus yesterday. \n  In a statement after the signing of the agreement, Mr. \nEvangelou praised the importance of the agreement and also \nreferred to the close relations between the two countries. \n"
+			},
+			"_explanation": {
+				"value": 20.565449,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.4227424,
+					"description": "weight(text:international in 106675) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.4227424,
+						"description": "score(LMJelinekMercerSimilarity, doc=106675, freq=1.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.9205155,
+					"description": "weight(text:organized in 106675) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.9205155,
+						"description": "score(LMJelinekMercerSimilarity, doc=106675, freq=1.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.2221904,
+					"description": "weight(text:crime in 106675) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.2221904,
+						"description": "score(LMJelinekMercerSimilarity, doc=106675, freq=1.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "LA121990-0141",
+			"_score": 20.525402,
+			"_source": {
+				"id": "LA121990-0141",
+				"text": "\nA union representing Atlantic City casino workers is controlled through mob \nkilling, extortion, embezzlement and bribery, the Justice Department said in \ncourt papers filed today. \n\n\nU.S. Atty. Gen. Dick Thornburgh said at a morning news conference that the \nlocal has been controlled for 20 years by the Bruno-Scarfo organized-crime \nfamily, which controls Philadelphia and southern New Jersey. \n\n\n\"Through their brutal and often deadly acts of violence and intimidation, \nmembers of the Bruno-Scarfo families have destroyed the integrity of the union \nand its leadership,\" Thornburgh said. \n\n\nNicodemo (Little Nicky) Scarfo has been controlling the local from prison, \nwhere he is serving a life sentence for his 1988 conviction on Racketeer \nInfluenced, Corrupt Organizations Act charges, according to the complaint. \n\n\nIn a suit filed in U.S. District Court, the Justice Department is seeking to \ntake control under civil racketeering statutes of the 22,000-member Local 54 of \nthe Hotel Employees Restaurant Employees International Union. The local \nrepresents hotel, bar and restaurant workers in Atlantic City casinos and in \nother southern New Jersey cities. \n\n\nThe suit seeks court-ordered control of the local, the restriction of the \nunion's international president from the local's affairs, the removal of the \nlocal's president and five other officials and the forfeiture of illegally \nobtained profits. \n\n\nAlso named was Edward Hanley, president of the Washington-based international \nsince 1973. The suit said he was an associate of senior members of the \nChicago-based organized-crime family. \n\n\nCiting alleged dealings with organized-crime figures in New Jersey, New York \nand Las Vegas, prosecutors are seeking to bar Hanley from further association \nwith Local 54. \n\n\nThornburgh said the organized-crime families earned perhaps hundreds of \nthousands of dollars through sweetheart contracts and kickbacks. \n\n"
+			},
+			"_explanation": {
+				"value": 20.525402,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.2183046,
+					"description": "weight(text:international in 2548) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.2183046,
+						"description": "score(LMJelinekMercerSimilarity, doc=2548, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 8.002726,
+					"description": "weight(text:organized in 2548) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 8.002726,
+						"description": "score(LMJelinekMercerSimilarity, doc=2548, freq=4.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.304371,
+					"description": "weight(text:crime in 2548) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.304371,
+						"description": "score(LMJelinekMercerSimilarity, doc=2548, freq=4.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-67126",
+			"_score": 20.397125,
+			"_source": {
+				"id": "FBIS4-67126",
+				"text": "Fight   Narcotics, Terrorism \n TA0705181994 Ankara TRT Television Network in Turkish 1700 \nGMT 7 May 94 \n TA0705181994 \n  Ankara TRT Television Network \n  Turkish \nBFN \n [Announcer-read report over video] \n  [Text] Turkey and Jordan will cooperate in the struggle \nagainst narcotics smuggling and terrorism. An agreement was \nsigned in Ankara today between Turkey and Jordan for the \ncooperation in the struggle against narcotics and barbiturates \nsmuggling, international terrorism, and organized crime. During \nthe signing ceremony, Interior Minister Nahit Mentese said that \nthe cooperation envisaged in the agreement will contribute to \nthe development of relations in other fields as well. \n  [Begin Mentese recording] This agreement will result in \neffective and comprehensive cooperation in the struggle against \ninternational narcotics smuggling, international terrorism, and \nother organized crime. It has also been decided to establish a \njoint committee to be comprised of the representatives of the \ntwo sides with the aim of supervising the implementation of this \ncooperation and eliminating its shortcomings. \n  Moreover, under the agreement, our countries will exchange \nexperts as well as information and documents. [end recording] \n  In turn, Jordanian Interior Minister Salamah Hammad said \nthat \nthe agreement will further increase bilateral relations. \n"
+			},
+			"_explanation": {
+				"value": 20.397125,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.6362996,
+					"description": "weight(text:international in 174891) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.6362996,
+						"description": "score(LMJelinekMercerSimilarity, doc=174891, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.729537,
+					"description": "weight(text:organized in 174891) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.729537,
+						"description": "score(LMJelinekMercerSimilarity, doc=174891, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.031289,
+					"description": "weight(text:crime in 174891) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.031289,
+						"description": "score(LMJelinekMercerSimilarity, doc=174891, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS4-19535",
+			"_score": 20.135416,
+			"_source": {
+				"id": "FBIS4-19535",
+				"text": "BFN \n [Report by \"k.h.\": \"Use Intelligence Services\"] \n  [Text] Berlin -- Eckart Werthebach, president of the \nFederal Office for the Protection of the Constitution [BfV], has \ncome out in favor of using the intelligence services also to \ncombat organized crime. At an international expert conference \nof the Friedrich-Ebert Foundation about the responsibilities of \npolice and intelligence services in the democratic rule-of-law \nstate, Werthebach said in the Berlin Reichstag that this \nexpansion of authority must be decided by politics. It would \npreserve the separation of powers and the independence of police \nand intelligence services. As the representative of the police, \nLeopold Schuster, head of the Counternarcotic Department in the \nFederal Office of Criminal Investigations [BKA], objected to \nWerthebach's statements. Expanding the tasks of the \nintelligence services is not absolutely necessary, he said. In \naddition, there are constitutional obstacles to it. \n  Werthebach justified his proposal by saying that the BfV has \nexperience in counterespionage and in keeping an eye on both \nnational and international underground terrorist movements. His \noffice is better equipped in terms of \"means of surveillance\" \nthan the police. The precondition for taking over the task of \ncombating crime is an increase in personnel as well as an \namendment to the Federal Constitutional Protection Law. \nWerthebach sees potential work for the BfV in observing \norganized crime structures that might exert influence over the \nmedia. It is urgently necessary to harmonize the methods and \nlegal bases of intelligence services all over Europe. In \naddition, in Germany there is no central interlocutor for the \nEuropean intelligence services. Werthebach said that currently \nthe most dangerous form of organized crime is the illegal \ntransport of radioactive substances from the CIS into West \nEurope. \n  Schuster explained his rejection of BfV cooperation by \nsaying \nthat preinvestigations are usual in the police and not a \nprivilege of the intelligence services. Rather, in view of \nabout 7 million crimes in 1993, the BKA is forced to cope with \n\"considerable problems regarding resources.\" In order to \n\"comprehensively\" combat organized crime, the BKA demands the \nauthority of a central body. According to Schuster, last year \nthere were 776 investigations of 10,000 individuals suspected of \ninvolvement in organized crime. \n"
+			},
+			"_explanation": {
+				"value": 20.135416,
+				"description": "sum of:",
+				"details": [{
+					"value": 4.6115427,
+					"description": "weight(text:international in 343634) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 4.6115427,
+						"description": "score(LMJelinekMercerSimilarity, doc=343634, freq=2.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 8.020011,
+					"description": "weight(text:organized in 343634) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 8.020011,
+						"description": "score(LMJelinekMercerSimilarity, doc=343634, freq=5.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.503862,
+					"description": "weight(text:crime in 343634) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.503862,
+						"description": "score(LMJelinekMercerSimilarity, doc=343634, freq=6.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS3-19199",
+			"_score": 20.130764,
+			"_source": {
+				"id": "FBIS3-19199",
+				"text": "Language:  German \nArticle Type:BFN \n [Report signed \"voel\": \"Smuggling of People Is a Thriving \nBusiness\"] \n  [Text] Vienna -- At the security meeting entitled \"The \nInternational Threat,\" which was held on Thursday [10 March] on \nthe occasion of the Security and Safety fair in Vienna, Interior \nMinister Franz Loeschnak reported on new types of organized \ncrime: The smuggling of refugees, mafia-type blackmail, and \neconomic crimes. \n  According to Loeschnak, 5,000 to 10,000 people are \n\"smuggled\" \ninto Austria illegally every year. Further tens of thousands, \nmainly from African countries, are transported by gangs to other \ncountries via Austria. Loeschnak stated: \"This is a thriving \nbusiness.\" Up to $10,000 is being charged per person. \n  Another type of crime is also spreading in Austria, namely \nthe extortion of money through blackmail. Loeschnak believes \nthat \"at least every third, but maybe even every second\" citizen \nfrom Turkey and the former Yugoslavia is being blackmailed by \norganized gangs to pay protection money. \n  Austrian companies that are carrying out orders abroad are \nalso faced with blackmail. Loeschnak claimed that they are \n\"paying without hesitation\" so as not to endanger their workers \nabroad. The climax of these criminal machinations has not yet \nbeen reached, and the international threat has reached a \n\"considerable extent.\" \n  Loeschnak spoke of \"very sophisticated\" econmic crime where \n\"big chiefs\" of international concerns illegally \"embezzle \nhundreds of millions of schillings, German marks, or dollars.\" \n  Loeschnak mentioned several measures to be taken by the \nexecutive bodies to get the situation under control. The \nestablishment of special units are an initial step. In the \nsphere of drugs, specialist have been active for years. This \nmust be extended to economic crimes, the smuggling of refugees \nand of cars. \n  To achieve success in the fight against organized crime, \n\"suitable tools\" are needed. Loeschnak mentioned the so-called \nbugging campaign, \"no matter whether big, medium-sized, or \nsmall,\" and the state's regulation of evidence. \"We should not \ndevelop any philosophies or principles in this respect. This is \nnot important. What we need are suitable instruments.\" \n  In this respect, the interior minister clearly supported \nmembership in the European Union, because international \ncooperation against cross-border crime must be intensified. \n"
+			},
+			"_explanation": {
+				"value": 20.130766,
+				"description": "sum of:",
+				"details": [{
+					"value": 5.2997093,
+					"description": "weight(text:international in 281035) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 5.2997093,
+						"description": "score(LMJelinekMercerSimilarity, doc=281035, freq=4.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.5094047,
+					"description": "weight(text:organized in 281035) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.5094047,
+						"description": "score(LMJelinekMercerSimilarity, doc=281035, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.321651,
+					"description": "weight(text:crime in 281035) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.321651,
+						"description": "score(LMJelinekMercerSimilarity, doc=281035, freq=5.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}, {
+			"_shard": "[robo04_index][0]",
+			"_node": "gGfaKnlwSbCXS3pbTyVkDg",
+			"_index": "robo04_index",
+			"_type": "docs",
+			"_id": "FBIS3-21961",
+			"_score": 20.088768,
+			"_source": {
+				"id": "FBIS3-21961",
+				"text": "Language:  German \nArticle Type:BFN \n [Markus Lesch report: \"In The Throes of Crime\"] \n  [Text] International crime is gaining increasing control \nover Germany's eastern neighbors. Organized crime is \nestablishing itself in Poland and the Czech Republic along its \npath to Western markets, with Germany as the objective. The \neastern laender can feel this already. \n  \"In those countries, organized crime wants to earn its fare \nto come to Germany, so to speak, and is establishing permanent \ninfrastructures there,\" said Saxony's Interior Minister Heinz \nEggert at an international conference on internal security in \nDresden. \n  \"Western European crime is quickly spreading to the East,\" \nwarned the president of the Czech Criminal Police Colonel Jan \nVaculik. The most significant organized crime rings in the \nCzech Republic are groups of people from the Russophone area. \n\"These groups are virtually impossible to overcome. They \nenforce silence with brutal methods, similar to those used by \nthe Mafia in relation to the Omerta,\" Vaculik explained. \n  Contacts between this \"Russo-Mafia\" and Italian groups have \nbeen documented. Crime bosses from Naples and Moscow have \nalready met in Prague in order to organize the smuggling of \ncocaine. The strongest Italian group is the notorious Camorra \nfrom Naples. Vaculik: \"We have information that the Camorra \nwants to expand even further, to Russia and Estonia.\" \n  The third organized crime group consists of the Chinese \n\"Flying Dragons and `K-14' from New York, who extort protection \nmoney and deal in transfers of human cargo from the Far East to \nGermany and Western Europe. \n  Warnings signals are also coming from Poland, especially \nregarding drugs. \"Poland has become a laboratory for synthetic \ndrugs,\" says Janusz Wolny of the Polish Interior Ministry. \"In \naddition, there are increasing quantities of cocaine from South \nAmerica, heroin from the Near, Middle, and Far East, and \nmarijuana from Africa.\" The quantity of drugs seized in 1993 \nwas double the 1992 figure. \n  The brutality of the criminal elements is growing at an \nalarming rate. In 1993, in fights alone, there were 185 heavy \noffenses, including 56 homicides, 31 kidnappings, and 38 attacks \nwith firearms or grenades. \n  Even in Dresden, a hand grenade blew up in front of a police \nprecinct. \"The violence is going to get even bigger because of \nthe involvement of criminal groups from CIS and the Czech \nRepublic on the prostitution scene,\" warns Peter Raisch, \npresident of the Saxon Criminal Office. \n  The Mafia lawyer Teresa Principato from Palermo confirmed \nthe \ngrowing interest of Italian crime groups in East Europe and the \nGerman market. \"Eastern Germany is a favorite place for money \nlaundering,\" she said. \"The police forces of the different \nlaender appreciate the importance of international cooperation \nto fight crime. Now is the time for politics to follow suit,\" \nsaid Italy's best-known Mafia expert. \n"
+			},
+			"_explanation": {
+				"value": 20.088768,
+				"description": "sum of:",
+				"details": [{
+					"value": 4.76941,
+					"description": "weight(text:international in 280546) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 4.76941,
+						"description": "score(LMJelinekMercerSimilarity, doc=280546, freq=3.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 0.00052515016,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.550931,
+					"description": "weight(text:organized in 280546) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.550931,
+						"description": "score(LMJelinekMercerSimilarity, doc=280546, freq=4.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 4.302792e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}, {
+					"value": 7.7684264,
+					"description": "weight(text:crime in 280546) [PerFieldSimilarity], result of:",
+					"details": [{
+						"value": 7.7684264,
+						"description": "score(LMJelinekMercerSimilarity, doc=280546, freq=10.0), computed from:",
+						"details": [{
+							"value": 0.1,
+							"description": "lambda",
+							"details": []
+						}, {
+							"value": 8.653438e-05,
+							"description": "collection probability",
+							"details": []
+						}]
+					}]
+				}]
+			}
+		}]
+	}
+}

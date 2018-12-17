@@ -1,4 +1,5 @@
 import pymongo
+from bs4 import BeautifulSoup
 
 client = pymongo.MongoClient()
 db = client.snrm
@@ -33,7 +34,8 @@ for f_name in files:
             line = line.decode("utf-8", errors='ignore')
             if line.startswith("</DOC>"):
                 doc["docNo"] = doc["docNo"].strip(" ")
-                doc["text"] = doc["text"].strip(" ")
+                soup = BeautifulSoup(doc["text"].strip(" "), "lxml")
+                doc["text"] = soup.get_text()
                 print(doc["docNo"])
 
                 if coll.find({"docNo": doc["docNo"]}).count() == 0:

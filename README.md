@@ -19,3 +19,30 @@ If you find this model useful, you may want to cite the SNRM paper published at 
 
 # Author
 This project was implemented by [Hamed Zamani](http://hamedz.ir/) of the [Center for Intelligent Information Retrieval (CIIR)](http://ciir.cs.umass.edu/) at the University of Massachusetts Amherst. If you have any comment or question, please do not hesitate to contact the author via <zamani@cs.umass.edu>.
+
+
+# My Experiment on Robust2004
+## Preprocess
+### 1. parse document and query into mongodb
+```bash
+cd preprocess
+python3 parse_documents.py
+python3 parse_query.py
+```
+### 2. tokenize
+tokenize based on the dictionary of Glove.
+```bash
+python3 extract_word_list.py
+python3 doc_tokenize.py
+```
+
+### 3. use ElasticSearch to generate query likelihood score
+```bash
+python3 create_index_by_elasticsearch.py
+python3 test_search.py
+```
+
+### 4. create pairwise data
+```bash
+python3 create_pairwise_data.py
+```
