@@ -46,3 +46,13 @@ python3 test_search.py
 ```bash
 python3 create_pairwise_data.py
 ```
+
+### 5. create dictionary use Glove
+```bash
+
+```
+## Train
+```bash
+cd code
+python3 train.py 
+```

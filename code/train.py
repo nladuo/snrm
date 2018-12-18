@@ -3,11 +3,11 @@ Training the SNRM model.
 
 Authors: Hamed Zamani (zamani@cs.umass.edu)
 """
-
+import pymongo
 import logging
 import numpy as np
 import tensorflow as tf
-
+import json
 from dictionary import Dictionary
 from params import FLAGS
 from snrm import SNRM
@@ -25,7 +25,8 @@ for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3, FLAGS.hidden_4, FLAGS.
 # Dictionary is a class containing terms and their IDs. The implemented class just load the terms from a Galago dump
 # file. If you are not using Galago, you have to implement your own reader. See the 'dictionary.py' file.
 dictionary = Dictionary()
-dictionary.load_from_galago_dump(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_freq)
+# dictionary.load_from_galago_dump(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_freq)
+dictionary.load_my_dict(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_freq)
 
 # The SNRM model.
 snrm = SNRM(dictionary=dictionary,
@@ -38,6 +39,23 @@ snrm = SNRM(dictionary=dictionary,
             dropout_parameter=FLAGS.dropout_parameter,
             regularization_term=FLAGS.regularization_term,
             learning_rate=FLAGS.learning_rate)
+
+
+client = pymongo.MongoClient()
+db = client.snrm
+doc_coll = db.docs
+
+
+def tokens2vec(tokens, length):
+    data = [0] * length
+    for i, token in enumerate(tokens):
+        if token in dictionary.term_to_id.keys():
+            data[i] = dictionary.term_to_id[token]
+    return data
+
+
+def get_tokens(docNo):
+    return doc_coll.find_one({"docNo": docNo})["tokens"]
 
 
 def generate_batch(batch_size, mode='train'):
@@ -56,15 +74,36 @@ def generate_batch(batch_size, mode='train'):
             batch_label (list): a 2D list of float within the range of [0, 1] with size (batch_size * 1).
              Label shows the probability of doc1 being more relevant than doc2. This can simply be 0 or 1.
     """
-    raise Exception('the generate_batch method is not implemented.')
+    # raise Exception('the generate_batch method is not implemented.')
+    global batch_index
 
     batch_query = []
     batch_doc1 = []
     batch_doc2 = []
     batch_label = []
 
+    if batch_index+batch_size >= data_size:
+        batch_index = batch_index + batch_size - data_size
+    batch_data = pair_wise_data[batch_index:batch_index+batch_size]
+
+    for data in batch_data:
+        q = tokens2vec(data["q"].lower().split(" "), FLAGS.max_q_len)
+        d1 = tokens2vec(get_tokens(data["d1_id"]), FLAGS.max_doc_len)
+        d2 = tokens2vec(get_tokens(data["d2_id"]), FLAGS.max_doc_len)
+        batch_query.append(q)
+        batch_doc1.append(d1)
+        batch_doc2.append(d2)
+        batch_label.append(int(data["label"] > 0))
+
     return batch_query, batch_doc1, batch_doc2, batch_label
 
+
+batch_index = 0
+print("loading pair wise dataset")
+with open("../data/pair_wise_data.json", "r") as f:
+    pair_wise_data = json.load(f)
+data_size = len(pair_wise_data)
+print("dataset loaded")
 
 writer = tf.summary.FileWriter(FLAGS.base_path + FLAGS.log_path + FLAGS.run_name, graph=snrm.graph)
 

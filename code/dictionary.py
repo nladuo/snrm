@@ -3,6 +3,8 @@ A dictionary class that contains vocabulary terms and their IDs.
 
 Authors: Hamed Zamani (zamani@cs.umass.edu)
 """
+import json
+
 
 class Dictionary(object):
     """
@@ -37,6 +39,18 @@ class Dictionary(object):
                     self.term_to_id[term] = id
                     id += 1
         print(str(id) + ' terms have been loaded to the dictionary with the minimum frequency of ' + str(min_freq))
+
+    def load_my_dict(self, file_name, min_freq):
+        _id = 1
+        with open(file_name) as f:
+            d = json.load(f)
+            for term in d.keys():
+                freq = d[term]
+                if freq > min_freq:
+                    self.id_to_term.append(term)
+                    self.term_to_id[term] = _id
+                    _id += 1
+        print(str(_id) + ' terms have been loaded to the dictionary with the minimum frequency of ' + str(min_freq))
 
     def size(self):
         return len(self.id_to_term)

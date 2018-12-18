@@ -22,7 +22,7 @@ for count, q in enumerate(query_coll.find()):
     }
     while True:
         try:
-            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=800)
+            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=200)
             break
         except Exception as ex:
             print(ex)
@@ -47,5 +47,5 @@ for count, q in enumerate(query_coll.find()):
                     "label": label,
                 })
 
-with open("pair_wise_data.json", "w") as f:
+with open("../data/pair_wise_data.json", "w") as f:
     json.dump(pair_wise_data, f)
