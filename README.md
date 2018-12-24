@@ -27,8 +27,8 @@ This project was implemented by [Hamed Zamani](http://hamedz.ir/) of the [Center
 - TensorFlow-1.11
 
 ## Data Preprocessing
-### About Data
-![](data/data.png)
+### My Robust04 Data
+![](robus04_data.png)
 
 ### 1. parse document and query into mongodb
 ```bash
