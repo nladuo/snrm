@@ -11,6 +11,7 @@ import json
 from dictionary import Dictionary
 from params import FLAGS
 from snrm import SNRM
+import time
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
@@ -137,6 +138,7 @@ with tf.Session(graph=snrm.graph) as session:
             _, loss_val, summary = session.run([snrm.optimizer, snrm.loss, snrm.summary_op], feed_dict=feed_dict)
 
             writer.add_summary(summary, step)
+            print(step, time.strftime("%Y-%m-%d %H:%M:%S"))
 
             if step % FLAGS.validate_every_n_steps == 0:
                 valid_loss = 0.

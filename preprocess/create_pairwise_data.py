@@ -22,7 +22,7 @@ for count, q in enumerate(query_coll.find()):
     }
     while True:
         try:
-            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=200)
+            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=50)
             break
         except Exception as ex:
             print(ex)

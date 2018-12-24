@@ -85,6 +85,9 @@ class SNRM(object):
             self.q_repr = self.network(emb_layer_q, self.weights, self.weights_name, self.biases, self.biases_name)
             self.d1_repr = self.network(emb_layer_d1, self.weights, self.weights_name, self.biases, self.biases_name)
             self.d2_repr = self.network(emb_layer_d2, self.weights, self.weights_name, self.biases, self.biases_name)
+            print(self.q_repr)
+            print(self.d1_repr)
+            print(self.d2_repr)
 
             logits_d1 = tf.reduce_sum(tf.multiply(self.q_repr, self.d1_repr), axis=1, keepdims=True)
             logits_d2 = tf.reduce_sum(tf.multiply(self.q_repr, self.d2_repr), axis=1, keepdims=True)
@@ -241,5 +244,4 @@ class SNRM(object):
                     self.dropout_keep_prob)
 
         return tf.reduce_mean(layers[len(layers) - 1], [1, 2])
-
 

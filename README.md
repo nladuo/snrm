@@ -22,7 +22,14 @@ This project was implemented by [Hamed Zamani](http://hamedz.ir/) of the [Center
 
 
 # My Experiment on Robust2004
-## Preprocess
+## Environment
+- Python3.6
+- TensorFlow-1.11
+
+## Data Preprocessing
+### About Data
+![](data/data.png)
+
 ### 1. parse document and query into mongodb
 ```bash
 cd preprocess
@@ -51,8 +58,19 @@ python3 create_pairwise_data.py
 ```bash
 
 ```
-## Train
+## Training
 ```bash
 cd code
 python3 train.py 
+```
+
+## Inverted Index Construction
+```bash
+cd code
+python3 index_construction.py 
+```
+
+## Evaluation
+```bash
+
 ```
