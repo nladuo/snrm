@@ -26,9 +26,11 @@ for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3, FLAGS.hidden_4, FLAGS.
 # Dictionary is a class containing terms and their IDs. The implemented class just load the terms from a Galago dump
 # file. If you are not using Galago, you have to implement your own reader. See the 'dictionary.py' file.
 dictionary = Dictionary()
+print("loading dictionary...")
 # dictionary.load_from_galago_dump(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_freq)
 dictionary.load_my_dict(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_freq)
 
+print("creating SNRM model...")
 # The SNRM model.
 snrm = SNRM(dictionary=dictionary,
             pre_trained_embedding_file_name=FLAGS.base_path + FLAGS.pre_trained_embedding_file_name,
@@ -49,9 +51,11 @@ doc_coll = db.docs
 
 def tokens2vec(tokens, length):
     data = [0] * length
-    for i, token in enumerate(tokens):
+    count = 0
+    for token in tokens:
         if token in dictionary.term_to_id.keys():
-            data[i] = dictionary.term_to_id[token]
+            data[count] = dictionary.term_to_id[token]
+            count += 1
     return data
 
 
@@ -96,6 +100,8 @@ def generate_batch(batch_size, mode='train'):
         batch_doc2.append(d2)
         batch_label.append(int(data["label"] > 0))
 
+    batch_index += batch_size
+
     return batch_query, batch_doc1, batch_doc2, batch_label
 
 
@@ -138,7 +144,7 @@ with tf.Session(graph=snrm.graph) as session:
             _, loss_val, summary = session.run([snrm.optimizer, snrm.loss, snrm.summary_op], feed_dict=feed_dict)
 
             writer.add_summary(summary, step)
-            print(step, time.strftime("%Y-%m-%d %H:%M:%S"))
+            print(step, batch_index, time.strftime("%Y-%m-%d %H:%M:%S"))
 
             if step % FLAGS.validate_every_n_steps == 0:
                 valid_loss = 0.

@@ -25,6 +25,7 @@ This project was implemented by [Hamed Zamani](http://hamedz.ir/) of the [Center
 ## Environment
 - Python3.6
 - TensorFlow-1.11
+- Machine: 20CPU + 128G Ram
 
 ## Data Preprocessing
 ### My Robust04 Data
@@ -54,13 +55,10 @@ python3 test_search.py
 python3 create_pairwise_data.py
 ```
 
-### 5. create dictionary use Glove
-```bash
-
-```
 ## Training
 ```bash
 cd code
+export CUDA_VISIBLE_DEVICES=1   # my gpu config
 python3 train.py 
 ```
 
@@ -71,6 +69,8 @@ python3 index_construction.py
 ```
 
 ## Evaluation
+### 1. Retrieval
 ```bash
-
+cd code
+python3 retrieval.py
 ```
