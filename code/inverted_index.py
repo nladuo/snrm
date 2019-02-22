@@ -34,3 +34,32 @@ class InMemoryInvertedIndex(InvertedIndex):
 
     def load(self, index_path):
         self.index = pkl.load(open(index_path, "rb"))
+
+
+class PartialInvertedIndex:
+    def __init__(self, index_path):
+        self.tmp_index = {}
+        self.index_path = index_path
+        self.index_name_list = []
+        self.not_zero_count = 0
+        self.count = 0
+
+    def add(self, doc_ids, doc_repr):
+        for i in range(len(doc_ids)):
+            for j in range(len(doc_repr[i])):
+                if doc_repr[i][j] > 0.:
+                    self.not_zero_count += 0.01
+                    if j not in self.tmp_index:
+                        self.tmp_index[j] = []
+                    self.tmp_index[j].append((doc_ids[i], doc_repr[i][j]))
+            self.count += 1
+        print("doc avg length:", self.not_zero_count / self.count * 100)
+
+    def dump_index_to_fs(self, index):
+        print("dumping index_file to", self.index_path.format(index=index))
+        pkl.dump(self.tmp_index, open(self.index_path.format(index=index), 'wb'))
+        self.index_name_list.append(self.index_path.format(index=index))
+        self.tmp_index = {}
+
+    def store_index_name_list(self, path):
+        pkl.dump(self.index_name_list, open(path, 'wb'))

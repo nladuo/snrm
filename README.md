@@ -22,10 +22,15 @@ This project was implemented by [Hamed Zamani](http://hamedz.ir/) of the [Center
 
 
 # My Experiment on Robust2004
+## Status
+Debugging.....
+
 ## Environment
 - Python3.6
-- TensorFlow-1.11
-- Machine: 20CPU + 128G Ram
+- TensorFlow-1.11.0
+- MongoDB
+- ElasticSearch-6.5.2
+- Training Machine: K80*1 + 20CPU + 128G RAM
 
 ## Data Preprocessing
 ### My Robust04 Data
@@ -37,28 +42,43 @@ cd preprocess
 python3 parse_documents.py
 python3 parse_query.py
 ```
-### 2. tokenize
+
+### 2. parse AOL query for training
+```
+cd data
+git clone https://github.com/wasiahmad/aol_query_log_analysis.git
+cd ../preprocess
+python3 parse_AOL_query
+
+```
+
+### 3. tokenize
 tokenize based on the dictionary of Glove.
 ```bash
 python3 extract_word_list.py
 python3 doc_tokenize.py
 ```
 
-### 3. use ElasticSearch to generate query likelihood score
+### 4. use ElasticSearch to generate query likelihood score
 ```bash
-python3 create_index_by_elasticsearch.py
+python3 create_index_in_elasticsearch.py
 python3 test_search.py
 ```
 
-### 4. create pairwise data
+### 5. create pairwise data
 ```bash
 python3 create_pairwise_data.py
+```
+
+### 6. create dictionary for training
+```
+python3 create_dictionary.py
 ```
 
 ## Training
 ```bash
 cd code
-export CUDA_VISIBLE_DEVICES=1   # my gpu config
+export CUDA_VISIBLE_DEVICES=0   # my gpu configuration
 python3 train.py 
 ```
 
@@ -73,4 +93,16 @@ python3 index_construction.py
 ```bash
 cd code
 python3 retrieval.py
+```
+
+### 2. Process rank labels
+```bash
+cd preprocess
+python3 parse_rank_labels.py
+```
+
+### 3. Evaluation
+```bash
+cd code
+python3 evaluate.py
 ```

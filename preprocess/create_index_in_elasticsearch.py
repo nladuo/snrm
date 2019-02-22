@@ -27,7 +27,7 @@ index_mappings = {
     }
 }
 
-es.indices.delete(index='robo04_index')
+# es.indices.delete(index='robo04_index')
 
 if es.indices.exists(index='robo04_index') is not True:
     print("create robo04_index")
@@ -50,7 +50,7 @@ for doc in docs:
     token_len = len(doc["tokens"])
 
     # token length filter
-    if token_len == 0 or token_len > 4000:
+    if token_len == 0 or token_len > 2000:
         continue
 
     doc = {

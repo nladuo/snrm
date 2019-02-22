@@ -12,13 +12,16 @@ from dictionary import Dictionary
 from params import FLAGS
 from snrm import SNRM
 import time
+from util import check_gpu_available, my_tokenize
+import random
+
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 # layer_size is a list containing the size of each layer. It can be set through the 'hiddein_x' arguments.
 layer_size = [FLAGS.emb_dim]
-for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3, FLAGS.hidden_4, FLAGS.hidden_5]:
+for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3]:  # FLAGS.hidden_4, FLAGS.hidden_5]:
     if i <= 0:
         break
     layer_size.append(i)
@@ -46,6 +49,7 @@ snrm = SNRM(dictionary=dictionary,
 
 client = pymongo.MongoClient()
 db = client.snrm
+# doc_coll = db.docs_exp
 doc_coll = db.docs
 
 
@@ -90,15 +94,19 @@ def generate_batch(batch_size, mode='train'):
     if batch_index+batch_size >= data_size:
         batch_index = batch_index + batch_size - data_size
     batch_data = pair_wise_data[batch_index:batch_index+batch_size]
+    random.shuffle(batch_data)  # shuffle the order
 
     for data in batch_data:
-        q = tokens2vec(data["q"].lower().split(" "), FLAGS.max_q_len)
+        q = tokens2vec(my_tokenize(data["q"]), FLAGS.max_q_len)
         d1 = tokens2vec(get_tokens(data["d1_id"]), FLAGS.max_doc_len)
         d2 = tokens2vec(get_tokens(data["d2_id"]), FLAGS.max_doc_len)
         batch_query.append(q)
         batch_doc1.append(d1)
         batch_doc2.append(d2)
-        batch_label.append(int(data["label"] > 0))
+        if data["label"] == -1:
+            batch_label.append(0.0)
+        else:
+            batch_label.append(1.0)
 
     batch_index += batch_size
 
@@ -111,6 +119,10 @@ with open("../data/pair_wise_data.json", "r") as f:
     pair_wise_data = json.load(f)
 data_size = len(pair_wise_data)
 print("dataset loaded")
+
+# # check the gpu availability
+# while not check_gpu_available():
+#     time.sleep(1)
 
 writer = tf.summary.FileWriter(FLAGS.base_path + FLAGS.log_path + FLAGS.run_name, graph=snrm.graph)
 
@@ -144,24 +156,64 @@ with tf.Session(graph=snrm.graph) as session:
             _, loss_val, summary = session.run([snrm.optimizer, snrm.loss, snrm.summary_op], feed_dict=feed_dict)
 
             writer.add_summary(summary, step)
-            print(step, batch_index, time.strftime("%Y-%m-%d %H:%M:%S"))
+            if step % 10 == 0:
+                print(step, batch_index, time.strftime("%Y-%m-%d %H:%M:%S"))
 
-            if step % FLAGS.validate_every_n_steps == 0:
-                valid_loss = 0.
+            if (step % FLAGS.validate_every_n_steps == 0) and (step != 0):
+                valid_coss = 0.
                 valid_id = 0
+                doc_total_len = 0
+                doc_count = 0
+                q_total_len = 0
+                q_count = 0
+
+                all_zero_d_count = 0
+                all_zero_q_count = 0
                 for valid_step in range(FLAGS.num_valid_steps):
                     query, doc1, doc2, labels = generate_batch(FLAGS.batch_size, 'valid')
                     labels = np.array(labels)
                     labels = np.concatenate(
                         [labels.reshape(FLAGS.batch_size, 1), 1. - labels.reshape(FLAGS.batch_size, 1)], axis=1)
+                    # print(labels)
                     feed_dict = {snrm.query_pl: query,
                                  snrm.doc1_pl: doc1,
                                  snrm.doc2_pl: doc2,
                                  snrm.labels_pl: labels}
-                    loss_val = session.run(snrm.loss, feed_dict=feed_dict)
-                    valid_loss += loss_val
-                valid_loss /= FLAGS.num_valid_steps
-                print('Average loss on validation set at step ', step, ': ', valid_loss)
+                    cost_val, doc_repr1, q_repr = session.run([snrm.cost,
+                                                               snrm.d1_repr,
+                                                               snrm.q_repr],
+                                                              feed_dict=feed_dict)
+
+                    # doc_repr1 = session.run(snrm.doc_representation, feed_dict={snrm.doc_pl: doc1})
+                    # q_repr = session.run(snrm.query_representation, feed_dict={snrm.query_pl: query})
+
+                    for i in range(FLAGS.batch_size):
+                        d_c = 0  # 本次的document not zero count
+                        for j in range(len(doc_repr1[i])):
+                            if doc_repr1[i][j] > 0.:
+                                d_c += 1
+                        if d_c == 0:
+                            all_zero_d_count += 1
+                        doc_total_len += d_c
+                    doc_count += FLAGS.batch_size
+
+                    for i in range(FLAGS.batch_size):
+                        q_c = 0  # 本次的query not zero count
+                        for j in range(len(q_repr[i])):
+                            if q_repr[i][j] > 0.:
+                                q_c += 1
+                        if q_c == 0:
+                            all_zero_q_count += 1
+                        q_total_len += q_c
+                    q_count += FLAGS.batch_size
+                    valid_coss += cost_val
+
+                valid_coss /= FLAGS.num_valid_steps
+                print('Average cost on validation set at step ', step, ': ', valid_coss)
+                print('Doc Avg Length at step ', step, ': ', doc_total_len / doc_count,
+                      ", zc-->", all_zero_d_count)
+                print('Query Avg Length at step ', step, ': ', q_total_len / q_count,
+                      ", zc-->", all_zero_d_count)
 
             if step > 0 and step % FLAGS.save_snapshot_every_n_steps == 0:
                 save_path = snrm.saver.save(session, FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + str(step))

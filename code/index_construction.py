@@ -8,11 +8,13 @@ import logging
 import tensorflow as tf
 import pymongo
 import traceback
-import numpy as np
 from dictionary import Dictionary
-from inverted_index import InMemoryInvertedIndex
+# from inverted_index import PartialInvertedIndex
+from inverted_index import InMemoryInvertedIndex, PartialInvertedIndex
 from params import FLAGS
 from snrm import SNRM
+import os
+import time
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
@@ -81,7 +83,7 @@ document_ids = []
 print("loading document_ids...")
 for doc in doc_coll.find({}):
     token_len = len(doc["tokens"])
-    if token_len == 0 or token_len > 4000:
+    if token_len == 0 or token_len > 2000:
         continue
     document_ids.append(doc["docNo"])
 
@@ -100,29 +102,42 @@ snrm = SNRM(dictionary=dictionary,
             regularization_term=FLAGS.regularization_term,
             learning_rate=FLAGS.learning_rate)
 
-inverted_index = InMemoryInvertedIndex(layer_size[-1])
+#
+step = 0
+
+if not os.path.exists(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + "-inverted-index"):
+    os.mkdir(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + "-inverted-index")
+
+index_path_base = FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index/{index}.pkl'
+# inverted_index = InMemoryInvertedIndex(layer_size[-1])
+inverted_index = PartialInvertedIndex(index_path_base)
+
+batch_index_id = 0
 with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     print('Initialized')
 
-    c = "32000"  # my trained "model/nladuo-snrm32000.data-00000-of-00001"
+    model_index = "54000"  # my trained "model/nladuo-snrm54000.data-00000-of-00001"
     snrm.saver.restore(session, FLAGS.base_path + FLAGS.model_path +
                        FLAGS.run_name + model_index)  # restore all variables
     logging.info('Load model from {:s}'.format(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + model_index))
 
-    docs = []
-    doc_names = []
-    col_file = open(FLAGS.base_path + FLAGS.model_path + 'learned_robust.txt', 'wb')
-    doc_len_file = open(FLAGS.base_path + FLAGS.model_path + 'learned_robust_doc_len.txt', 'wb')
-
     while True:
-        print("indexing", batch_index, "to", batch_index+FLAGS.batch_size, "...")
+        print("indexing", batch_index, "to", batch_index+FLAGS.batch_size, "...", time.time())
         doc_ids, docs = generate_batch(FLAGS.batch_size)
         try:
             doc_repr = session.run(snrm.doc_representation, feed_dict={snrm.doc_pl: docs})
             inverted_index.add(doc_ids, doc_repr)
+            step += 1
+            if step % 10 == 0:
+                inverted_index.dump_index_to_fs(batch_index_id)
+                batch_index_id += 1
+                exit()
         except Exception as ex:
             traceback.print_exc()
             break
 
-    inverted_index.store(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index.pkl')
+    # inverted_index.store(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index.pkl')
+    inverted_index.dump_index_to_fs(batch_index_id)
+    inverted_index.store_index_name_list(FLAGS.base_path + FLAGS.model_path +
+                                         FLAGS.run_name + '-inverted-index/name_list.pkl')

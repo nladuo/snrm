@@ -2,6 +2,7 @@ import pymongo
 from elasticsearch import Elasticsearch
 import json
 import time
+import random
 
 es = Elasticsearch()
 client = pymongo.MongoClient()
@@ -22,7 +23,7 @@ for count, q in enumerate(query_coll.find()):
     }
     while True:
         try:
-            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=50)
+            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=100)
             break
         except Exception as ex:
             print(ex)
@@ -47,5 +48,6 @@ for count, q in enumerate(query_coll.find()):
                     "label": label,
                 })
 
+random.shuffle(pair_wise_data)
 with open("../data/pair_wise_data.json", "w") as f:
     json.dump(pair_wise_data, f)

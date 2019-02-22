@@ -12,6 +12,7 @@ from inverted_index import InMemoryInvertedIndex
 from params import FLAGS
 from snrm import SNRM
 import pickle as pkl
+from util import my_tokenize
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
@@ -43,28 +44,35 @@ snrm = SNRM(dictionary=dictionary,
             regularization_term=FLAGS.regularization_term,
             learning_rate=FLAGS.learning_rate)
 
-print("loading inverted-index...")
-inverted_index = InMemoryInvertedIndex(layer_size[-1])
-inverted_index.load(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index.pkl')
-
-
-client = pymongo.MongoClient()
-db = client.snrm
-query_coll = db.queries
+# index_list_path = FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index/name_list.pkl'
+# index_path_list = pkl.load(open(index_list_path, "rb"))
 
 with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     print('Initialized')
 
-    model_index = "32000"  # my trained "model/nladuo-snrm32000.data-00000-of-00001"
+    model_index = "48000"  # my trained "model/nladuo-snrm54000.data-00000-of-00001"
     snrm.saver.restore(session, FLAGS.base_path + FLAGS.model_path +
                        FLAGS.run_name + model_index)  # restore all variables
     logging.info('Load model from {:s}'.format(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + model_index))
 
+    # # indexing from every inverted index
+    # for index_id, index_path in enumerate(index_path_list):
+    #     print("loading inverted-index from ", index_path)
+    #     inverted_index = InMemoryInvertedIndex(layer_size[-1])
+    #     inverted_index.load(index_path)
+
+    client = pymongo.MongoClient()
+    db = client.snrm
+    query_coll = db.queries
+
     queries = {}
+    count = 0
+    not_zero_count = 0
     for q in query_coll.find({}):
         qid = str(q["number"])
         queries[qid] = q["title"].lower()
+        queries[qid] = " ".join(my_tokenize(q["title"]))
 
     result = dict()
     for qid in queries.keys():
@@ -75,13 +83,24 @@ with tf.Session(graph=snrm.graph) as session:
             q_term_ids.append(0)
 
         query_repr = session.run(snrm.query_representation, feed_dict={snrm.test_query_pl: [q_term_ids]})
-        retrieval_scores = dict()
-        for i in range(len(query_repr[0])):
-            if query_repr[0][i] > 0.:
-                for (did, weight) in inverted_index.index[i]:
-                    if did not in retrieval_scores:
-                        retrieval_scores[did] = 0.
-                    retrieval_scores[did] += query_repr[0][i] * weight
-
-        result[qid] = sorted(retrieval_scores.items(), key=lambda x: x[1])
-    pkl.dump(result, open(FLAGS.base_path + FLAGS.result_path + FLAGS.run_name + '-250-queries.pkl', "wb"))
+        print(query_repr.shape)
+        c = 0
+        for i in query_repr[0]:
+            if i > 0.:
+                c += 1
+        not_zero_count += c
+        count += 1
+        print("query avg length:", not_zero_count / count, "this query none zero count:", c)
+        #     print(query_repr)
+        #     exit()
+        #     retrieval_scores = dict()
+        #     for i in range(len(query_repr[0])):
+        #         if query_repr[0][i] > 0.:
+        #             for (did, weight) in inverted_index.index[i]:
+        #                 if did not in retrieval_scores:
+        #                     retrieval_scores[did] = 0.
+        #                 retrieval_scores[did] += query_repr[0][i] * weight
+        #
+        #     result[qid] = sorted(retrieval_scores.items(), key=lambda x: x[1])
+        # pkl.dump(result, open(FLAGS.base_path + FLAGS.result_path + FLAGS.run_name +
+        #                       '-250-queries-{index_id}.pkl'.format(index_id=index_id), "wb"))

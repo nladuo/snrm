@@ -3,8 +3,10 @@ Some useful methods.
 
 Authors: Hamed Zamani (zamani@cs.umass.edu)
 """
-
 import math
+from nltk.corpus import stopwords
+import string
+from nltk.tokenize import word_tokenize
 
 
 def load_word_embeddings(file_name, dim, normalize=True):
@@ -77,3 +79,28 @@ def read_query_file(file_name, dictionary):
                 raise Exception('duplicate query id')
             result[qid] = dictionary.get_emb_list(q_text, delimiter="_")
     return result
+
+
+def check_gpu_available():
+    """ check GPU mem used """
+    import pynvml
+    pynvml.nvmlInit()
+    handle = pynvml.nvmlDeviceGetHandleByIndex(1)
+    meminfo = pynvml.nvmlDeviceGetMemoryInfo(handle)
+    print("GPU Mem Used:", meminfo.used)
+    return meminfo.used < 20425674240
+
+StopWords = set(stopwords.words('english') + list(string.punctuation))
+
+
+def my_tokenize(title):
+    """ tokenize word """
+    title = title.lower()
+    words = []
+    for word in word_tokenize(title):
+        for w in word.split("/"):
+            for w2 in w.split("-"):
+                if w2 in StopWords:
+                    continue
+                words.append(w2)
+    return words
