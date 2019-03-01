@@ -7,33 +7,37 @@ import random
 es = Elasticsearch()
 client = pymongo.MongoClient()
 db = client.snrm
-query_coll = db.queries
+query_coll = db.aol_queries
 
 
 pair_wise_data = []
 
-for count, q in enumerate(query_coll.find()):
+queries = []
+for q in query_coll.find():
+    queries.append(q)
+
+for count, q in enumerate(queries):
     query_contains = {
         "query": {
             "match": {
-                "text": q["title"]
+                "text": q["query"]
             }
         },
         "explain": True
     }
     while True:
         try:
-            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=100)
+            searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=20)
             break
         except Exception as ex:
             print(ex)
             time.sleep(1)
-    print(count, q["title"])
+    print(count, q["query"])
     for i, hit in enumerate(searched["hits"]["hits"]):
         print("\t", count, i, hit["_id"])
         for j, hit2 in enumerate(searched["hits"]["hits"]):
             if i != j:
-                q_title = q["title"]
+                q_title = q["query"]
                 d1_id = hit["_id"]
                 d2_id = hit2["_id"]
 

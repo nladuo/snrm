@@ -48,7 +48,7 @@ python3 parse_query.py
 cd data
 git clone https://github.com/wasiahmad/aol_query_log_analysis.git
 cd ../preprocess
-python3 parse_AOL_query
+python3 parse_AOL_query.py
 
 ```
 

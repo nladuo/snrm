@@ -27,6 +27,7 @@ client = pymongo.MongoClient()
 db = client.snrm
 doc_coll = db.docs
 query_coll = db.queries
+aol_query_coll = db.aol_queries
 
 # dictionary for frequncy
 dictionary = {}
@@ -60,6 +61,18 @@ for i, doc in enumerate(docs):
 # query tokens add into dictionary
 for q in query_coll.find():
     title = q["title"]
+    print(title)
+    for token in my_tokenize(title):
+        if token in WordList:
+            if token not in dictionary.keys():
+                dictionary[token] = 21   # 20 is the minimum frequency for dictionary.
+            else:
+                dictionary[token] += 21
+
+
+# query tokens add into dictionary
+for q in aol_query_coll.find():
+    title = q["query"]
     print(title)
     for token in my_tokenize(title):
         if token in WordList:

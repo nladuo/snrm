@@ -35,7 +35,7 @@ tf.flags.DEFINE_float('regularization_term', 1e-8, 'Dropout parameter. default: 
 # tf.flags.DEFINE_integer('hidden_5', 2000, 'Size of the third hidden layer. Should be positive. default: -1.')
 
 tf.flags.DEFINE_integer('hidden_1', 300, 'Size of the third hidden layer. Should be positive. default: -1.')
-tf.flags.DEFINE_integer('hidden_2', 100, 'Size of the third hidden layer. Should be positive. default: -1.')
+tf.flags.DEFINE_integer('hidden_2', 300, 'Size of the third hidden layer. Should be positive. default: -1.')
 tf.flags.DEFINE_integer('hidden_3', 2000, 'Size of the third hidden layer. Should be positive. default: -1.')
 
 
@@ -43,7 +43,7 @@ tf.flags.DEFINE_integer('validate_every_n_steps', 500,
                         'Print the average loss value on the validation set at every n steps. default: 10000.')
 tf.flags.DEFINE_integer('save_snapshot_every_n_steps', 2000, 'Save the model every n steps. default: 10000.')
 
-tf.flags.DEFINE_integer('max_q_len', 4, 'Maximum query length. default: 10.')
+tf.flags.DEFINE_integer('max_q_len', 20, 'Maximum query length. default: 10.')
 tf.flags.DEFINE_integer('max_doc_len', 2000, 'Maximum document length. default: 1000.')
 tf.flags.DEFINE_integer('dict_min_freq', 20, 'minimum collection frequency of terms for dictionary. default: 20')
 
