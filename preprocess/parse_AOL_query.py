@@ -1,39 +1,36 @@
 import pymongo
-import os
 import json
+import string
+from nltk.corpus import stopwords
+
+StopWords = set(stopwords.words('english') + list(string.punctuation))
 
 client = pymongo.MongoClient()
 db = client.snrm
 coll = db.aol_queries
 
-coll.remove({})
+print(coll.remove({}))
 
 
-with open("../data/word_list.json", "r") as f:
-    WordList = json.load(f)
-
-AOL_LOG_DIR = "../data/aol_query_log_analysis/user_search_logs/"
+with open("../data/dictionary.json", "r") as f:
+    Dictionary = json.load(f)
 
 
-def is_record(q, sites):
+def parse_query(q):
     terms = q.split(" ")[:]
 
     if len(terms) > 20:
-        return False
+        return []
 
-    for site in sites:
-        c = 0
-        for t in terms:
-            if t in site:
-                c += 1
-        if len(terms) <= c:
-            return False
-
+    new_terms = []
     for term in terms:
-        if term not in WordList:
-            return False
+        if term not in StopWords:
+            new_terms.append(term)
 
-    return True
+        if term not in Dictionary:
+            return []
+
+    return new_terms
 
 
 def is_continue(query):
@@ -50,34 +47,43 @@ def is_continue(query):
 
     return False
 
-for f_name in os.listdir(AOL_LOG_DIR):
-    f_path = AOL_LOG_DIR + f_name
+c_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"]
 
-    print(f_name, coll.count())
+count = 0
+for c_id in c_list:
+    f_path = "../data/AOL-user-ct-collection/user-ct-test-collection-{c_id}.txt".format(c_id=c_id)
 
     with open(f_path, "r") as f:
-        for log in f.read().split("\n\n"):
-            query = log.split("\t")[0]
+        for line in f.readlines():
+            parts = line.split("\t")
+            if parts[0] != "AnonID":
 
-            sites = log.split("\n")[1:]
+                # print(parts)
+                query = parts[1].lower()
+                terms = parse_query(query)
+                if len(terms) == 0:
+                    continue
 
-            if is_continue(query):
-                continue
+                query = " ".join(terms)
 
-            if len(sites) > 0:
-                if is_record(query, sites):
-                    if coll.find({"query": query}).count() == 0:
-                        coll.insert({
-                            "query": query,
-                            "count": 1
-                        })
-                    else:
-                        q_count = coll.find_one({"query": query})["count"]
-                        coll.update({"query": query}, {
-                            "$set": {
-                                "count": q_count + 1
-                            }
-                        })
+                if is_continue(query):
+                    continue
 
-# coll.remove({"count": 1})
+                if coll.find({"query": query}).count() == 0:
+                    coll.insert({
+                        "query": query,
+                        "count": 1,
+                        "is_set": False
+                    })
+                    count += 1
+                    print(count, query)
+                else:
+                    q_count = coll.find_one({"query": query})["count"]
+                    coll.update({"query": query}, {
+                        "$set": {
+                            "count": q_count + 1
+                        }
+                    })
+        # if count > 1050000:
+        #     break
 

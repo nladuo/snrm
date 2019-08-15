@@ -6,7 +6,7 @@ import string
 from multiprocessing import Pool
 
 
-StopWords = set(stopwords.words('english') + list(string.punctuation))
+StopWords = set(stopwords.words('english') + list(string.punctuation) + ["''", "``"])
 
 client = pymongo.MongoClient()
 db = client.snrm
@@ -46,7 +46,7 @@ docs = []
 for doc in coll.find():
     docs.append(doc)
 
-CONCURRENT_COUNT = 19  # use 54 cpu for tokenizing
+CONCURRENT_COUNT = 20  # use 50 cpu for tokenizing
 
 
 def process_docs(part_id):

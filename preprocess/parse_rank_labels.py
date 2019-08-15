@@ -3,6 +3,7 @@ import json
 result = {}
 
 with open("../data/qrels.robust2004.txt", "r") as f:
+    f.readline()
     for line in f.readlines():
         print(line)
         items = line.split(" ")

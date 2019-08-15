@@ -175,7 +175,7 @@ class SNRM(object):
         biases_name = ['b' + str(i) for i in range(1, len(layer_sizes))] + ['b_out']
         # biases_name = ['b' + str(i) for i in range(1, len(layer_sizes) - 1)] + ['b_out']
 
-        filters = [5, 1, 1]
+        filters = [3, 1, 1]
         print(layer_sizes)
         for i in range(len(layer_sizes)):
             with tf.name_scope(weights_name[i]):
@@ -271,7 +271,8 @@ class SNRM(object):
                                            padding='SAME') + biases[biases_name[i]])
 
                 layers[i + 1] = tf.nn.dropout(
-                    tf.nn.leaky_relu(layers[i + 1], alpha=0.1),
+                    # tf.nn.leaky_relu(layers[i + 1], alpha=0.1),
+                    tf.nn.relu(layers[i + 1]),
                     self.dropout_keep_prob)
 
         return tf.reduce_mean(layers[len(layers) - 1], [1, 2])

@@ -22,24 +22,33 @@ def my_tokenize(title):
                 words.append(w2)
     return words
 
-
-client = pymongo.MongoClient()
-db = client.snrm
-doc_coll = db.docs
-query_coll = db.queries
-
-# pair_wise_data_coll = db.pair_wise_data
-
 # dictionary for frequncy
 dictionary = {}
 
+with open("triples.train.small.tsv", "r") as f:
+    while True:
+        line = f.readline()
+        if line:
+            query = line.split("\t")[0]
+            d1 = line.split("\t")[1]
+            d2 = line.split("\t")[2]
+            print(query)
+            print(d1)
+            print(d2)
+            break
+            # if query not in query_map.keys():
+            #     query_map[query] = 1
+            # else:
+            #     query_map[query] += 1
+            # print(count, len(query_map), query)
+            # count+=1
+        else:
+            break
+
+
 docs = []
 count = 0
-for doc in doc_coll.find():
-    if count % 1000 == 0:
-        print(count, doc["docNo"])
-    docs.append(doc)
-    count += 1
+
 
 # document tokens add into dictionary
 for i, doc in enumerate(docs):
@@ -59,17 +68,6 @@ for i, doc in enumerate(docs):
     print(i, doc["docNo"])
 
 
-# query tokens add into dictionary
-for q in query_coll.find():
-    title = q["title"]
-    print(title)
-    for token in my_tokenize(title):
-        if token in WordList:
-            if token not in dictionary.keys():
-                dictionary[token] = 31   # 20 is the minimum frequency for dictionary.
-            else:
-                dictionary[token] += 31
-
-
 with open("../data/dictionary.json", "w") as f:
     json.dump(dictionary, f)
+

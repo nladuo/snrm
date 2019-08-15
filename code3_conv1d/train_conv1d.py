@@ -14,14 +14,16 @@ from snrm import SNRM
 import time
 from util import check_gpu_available, my_tokenize
 import random
+import os
 
 
 FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 # layer_size is a list containing the size of each layer. It can be set through the 'hiddein_x' arguments.
-layer_size = [FLAGS.emb_dim]
-for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3]:  # FLAGS.hidden_4, FLAGS.hidden_5]:
+# layer_size = [FLAGS.emb_dim]
+layer_size = []
+for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3]:  #, FLAGS.hidden_4]:  # ,FLAGS.hidden_5]:
     if i <= 0:
         break
     layer_size.append(i)
@@ -50,7 +52,14 @@ snrm = SNRM(dictionary=dictionary,
 client = pymongo.MongoClient()
 db = client.snrm
 # doc_coll = db.docs_exp
-doc_coll = db.docs
+doc_coll = db.docs2
+
+all_doc_map = {}
+
+print("loading all documents...")
+for doc in doc_coll.find({}):
+    all_doc_map[doc["docNo"]] = doc["tokens"]
+print("documents loaded.")
 
 
 def tokens2vec(tokens, length):
@@ -58,13 +67,16 @@ def tokens2vec(tokens, length):
     count = 0
     for token in tokens:
         if token in dictionary.term_to_id.keys():
+            if count >= length:
+                break
             data[count] = dictionary.term_to_id[token]
             count += 1
     return data
 
 
 def get_tokens(docNo):
-    return doc_coll.find_one({"docNo": docNo})["tokens"]
+    global all_doc_map
+    return all_doc_map[docNo]
 
 
 def generate_batch(batch_size, mode='train'):
@@ -118,7 +130,7 @@ print("loading pair wise dataset")
 with open("../data/pair_wise_data.json", "r") as f:
     pair_wise_data = json.load(f)
 data_size = len(pair_wise_data)
-print("dataset loaded")
+print("dataset loaded, len:", data_size)
 
 # # check the gpu availability
 # while not check_gpu_available():
@@ -131,12 +143,16 @@ with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     logging.info('Initialized')
 
-    ckpt = tf.train.get_checkpoint_state(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name)
-
-    if ckpt and ckpt.model_checkpoint_path:
-        logging.info(ckpt.model_checkpoint_path)
-        snrm.saver.restore(session, ckpt.model_checkpoint_path)  # restore all variables
-        logging.info('Load model from {:s}'.format(ckpt.model_checkpoint_path))
+    # ckpt = tf.train.get_checkpoint_state(FLAGS.base_path + FLAGS.model_path)
+    # # print(FLAGS.base_path + FLAGS.model_path, "----", FLAGS.run_name + "164000")
+    # # print(ckpt)
+    # # exit()
+    # model_checkpoint_path = FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + "162000"
+    # print(model_checkpoint_path)
+    # if os.path.exists(model_checkpoint_path + ".meta"):
+    #     logging.info(model_checkpoint_path)
+    #     snrm.saver.restore(session, model_checkpoint_path)  # restore all variables
+    #     logging.info('Load model from {:s}'.format(model_checkpoint_path))
 
     # training
     if not FLAGS.experiment_mode:
@@ -213,7 +229,7 @@ with tf.Session(graph=snrm.graph) as session:
                 print('Doc Avg Length at step ', step, ': ', doc_total_len / doc_count,
                       ", zc-->", all_zero_d_count)
                 print('Query Avg Length at step ', step, ': ', q_total_len / q_count,
-                      ", zc-->", all_zero_d_count)
+                      ", zc-->", all_zero_q_count)
 
             if step > 0 and step % FLAGS.save_snapshot_every_n_steps == 0:
                 save_path = snrm.saver.save(session, FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + str(step))

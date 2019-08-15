@@ -18,7 +18,7 @@ FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 # layer_size is a list containing the size of each layer. It can be set through the 'hiddein_x' arguments.
-layer_size = [FLAGS.emb_dim]
+layer_size = []
 for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3]:  # FLAGS.hidden_4, FLAGS.hidden_5]:
     if i <= 0:
         break
@@ -46,13 +46,13 @@ snrm = SNRM(dictionary=dictionary,
 
 
 inverted_index = InMemoryInvertedIndex(layer_size[-1])
-inverted_index.load(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index.pkl')
+inverted_index.load(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index-20190812.pkl')
 
 with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     print('Initialized')
 
-    model_index = "44000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
+    model_index = "9994000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
     snrm.saver.restore(session, FLAGS.base_path + FLAGS.model_path +
                        FLAGS.run_name + model_index)  # restore all variables
     logging.info('Load model from {:s}'.format(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + model_index))
@@ -85,10 +85,12 @@ with tf.Session(graph=snrm.graph) as session:
                 c += 1
         not_zero_count += c
         count += 1
-        print("query avg length:", not_zero_count / count, "this query none zero count:", c, "\n")
+        print("query avg length:", not_zero_count / count, ", this query none zero count:", c, "\n")
         retrieval_scores = dict()
         for i in range(len(query_repr[0])):
             if query_repr[0][i] > 0.:
+                if i not in inverted_index.index:
+                    continue
                 for (did, weight) in inverted_index.index[i]:
                     if did not in retrieval_scores:
                         retrieval_scores[did] = 0.

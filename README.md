@@ -34,7 +34,7 @@ Debugging.....
 
 ## Data Preprocessing
 ### My Robust04 Data
-![](robus04_data.png)
+![](robust04_data.png)
 
 ### 1. parse document and query into mongodb
 ```bash
@@ -46,7 +46,7 @@ python3 parse_query.py
 ### 2. parse AOL query for training
 ```
 cd data
-git clone https://github.com/wasiahmad/aol_query_log_analysis.git
+wget 
 cd ../preprocess
 python3 parse_AOL_query.py
 
@@ -106,3 +106,18 @@ python3 parse_rank_labels.py
 cd code
 python3 evaluate.py
 ```
+
+P@20    ES: 0.31     SNRM: 
+
+
+
+## Model and Parameter Adjustment
+change the logits from reduce_sum to reduce_mean, the loss go below 1.0
+
+
+模型的问题,优化的方向.
+
+
+
+loss: 0.75   p@20 0.0048
+loss: 0.66   p@20 0.0022

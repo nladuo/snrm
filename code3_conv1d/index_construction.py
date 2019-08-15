@@ -20,11 +20,13 @@ FORMAT = '%(asctime)-15s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 # layer_size is a list containing the size of each layer. It can be set through the 'hiddein_x' arguments.
-layer_size = [FLAGS.emb_dim]
-for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3, FLAGS.hidden_4]: # , FLAGS.hidden_5]:
+layer_size = []
+for i in [FLAGS.hidden_1, FLAGS.hidden_2, FLAGS.hidden_3]:  # FLAGS.hidden_4]: # , FLAGS.hidden_5]:
     if i <= 0:
         break
     layer_size.append(i)
+
+print(layer_size)
 
 # Dictionary is a class containing terms and their IDs. The implemented class just load the terms from a Galago dump
 # file. If you are not using Galago, you have to implement your own reader. See the 'dictionary.py' file.
@@ -36,7 +38,7 @@ dictionary.load_my_dict(FLAGS.base_path + FLAGS.dict_file_name, FLAGS.dict_min_f
 
 client = pymongo.MongoClient()
 db = client.snrm
-doc_coll = db.docs
+doc_coll = db.docs2
 
 
 def tokens2vec(tokens, length):
@@ -83,7 +85,7 @@ document_ids = []
 print("loading document_ids...")
 for doc in doc_coll.find({}):
     token_len = len(doc["tokens"])
-    if token_len == 0 or token_len > 2000:
+    if token_len == 0 or token_len > 250:
         continue
     document_ids.append(doc["docNo"])
 
@@ -111,16 +113,17 @@ if not os.path.exists(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + "-in
 inverted_index = InMemoryInvertedIndex(layer_size[-1])
 
 
-while not check_gpu_available():
-    time.sleep(1)
+# while not check_gpu_available():
+#     time.sleep(1)
 
 
 batch_index_id = 0
+index_id = 0
 with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     print('Initialized')
 
-    model_index = "68000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
+    model_index = "9994000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
     snrm.saver.restore(session, FLAGS.base_path + FLAGS.model_path +
                        FLAGS.run_name + model_index)  # restore all variables
     logging.info('Load model from {:s}'.format(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + model_index))
@@ -132,9 +135,23 @@ with tf.Session(graph=snrm.graph) as session:
             doc_repr = session.run(snrm.doc_representation, feed_dict={snrm.doc_pl: docs})
             inverted_index.add(doc_ids, doc_repr)
             step += 1
+
+
+
         except Exception as ex:
             traceback.print_exc()
             break
+        # if step % 4000 == 0:
+        #     inverted_index.store(FLAGS.base_path + FLAGS.model_path +
+        #                          FLAGS.run_name + '-inverted-index-{index_id}.pkl'.
+        #                          format(index_id=index_id))
+        #     index_id += 1
+        #     inverted_index = InMemoryInvertedIndex(layer_size[-1])
 
     inverted_index.store(FLAGS.base_path + FLAGS.model_path +
-                                          FLAGS.run_name + '-inverted-index.pkl')
+                         FLAGS.run_name + '-inverted-index-20190812.pkl'.
+                         format(index_id=index_id))
+    #
+    # inverted_index.store(FLAGS.base_path + FLAGS.model_path +
+    #                      FLAGS.run_name + '-inverted-index-{index_id}.pkl'.
+    #                      format(index_id=index_id))

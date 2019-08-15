@@ -15,15 +15,19 @@ query_contains = {
             "text": query["title"]
         }
     },
-    "explain": True
+    "highlight": {
+        "fields": {
+            "text": {},
+        }
+    },
 }
 
 es = Elasticsearch()
-searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=2000)
+searched = es.search("robo04_index", doc_type="docs", body=query_contains, size=10)
 
 
 for i, hit in enumerate(searched["hits"]["hits"]):
-    print(i, hit["_id"])
+    print(i, hit)
 
 
 # print(query["title"])

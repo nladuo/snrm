@@ -45,14 +45,11 @@ snrm = SNRM(dictionary=dictionary,
             learning_rate=FLAGS.learning_rate)
 
 
-inverted_index = InMemoryInvertedIndex(layer_size[-1])
-inverted_index.load(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + '-inverted-index.pkl')
-
 with tf.Session(graph=snrm.graph) as session:
     session.run(snrm.init)
     print('Initialized')
 
-    model_index = "44000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
+    model_index = "68000"  # my trained "model/nladuo-snrm2000d44000.data-00000-of-00001"
     snrm.saver.restore(session, FLAGS.base_path + FLAGS.model_path +
                        FLAGS.run_name + model_index)  # restore all variables
     logging.info('Load model from {:s}'.format(FLAGS.base_path + FLAGS.model_path + FLAGS.run_name + model_index))
@@ -78,22 +75,10 @@ with tf.Session(graph=snrm.graph) as session:
             q_term_ids.append(0)
 
         query_repr = session.run(snrm.query_representation, feed_dict={snrm.test_query_pl: [q_term_ids]})
-        print(query_repr.shape)
         c = 0
         for i in query_repr[0]:
             if i > 0.:
                 c += 1
         not_zero_count += c
         count += 1
-        print("query avg length:", not_zero_count / count, "this query none zero count:", c, "\n")
-        retrieval_scores = dict()
-        for i in range(len(query_repr[0])):
-            if query_repr[0][i] > 0.:
-                for (did, weight) in inverted_index.index[i]:
-                    if did not in retrieval_scores:
-                        retrieval_scores[did] = 0.
-                    retrieval_scores[did] += query_repr[0][i] * weight
-
-        result[qid] = sorted(retrieval_scores.items(), key=lambda x: x[1])
-
-    pkl.dump(result, open(FLAGS.base_path + FLAGS.result_path + FLAGS.run_name + '-test-queries.pkl', 'wb'))
+        print("query avg length:", not_zero_count / count, "this query none zero count:", c)

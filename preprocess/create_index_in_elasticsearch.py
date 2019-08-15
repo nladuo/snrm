@@ -4,30 +4,18 @@ import pymongo
 es = Elasticsearch()
 
 index_mappings = {
-    # "settings": {
-    #     "index": {
-    #         "similarity": {
-    #           "my_similarity": {
-    #             "type": "LMJelinekMercer",
-    #             "lambda": 0.1
-    #           }
-    #         }
-    #     },
-    #     "number_of_shards": 1
-    # },
     "mappings": {
         "docs": {
             "properties": {
                 "text": {
                     "type": "text",
-                    # "similarity": "my_similarity"
                 }
             }
         }
     }
 }
 
-es.indices.delete(index='robo04_index')
+# es.indices.delete(index='robo04_index')
 
 if es.indices.exists(index='robo04_index') is not True:
     print("create robo04_index")
@@ -36,7 +24,7 @@ if es.indices.exists(index='robo04_index') is not True:
 
 client = pymongo.MongoClient()
 db = client.snrm
-coll = db.docs
+coll = db.docs2
 
 
 docs = []
@@ -50,7 +38,7 @@ for count, doc in enumerate(docs):
     token_len = len(doc["tokens"])
 
     # token length filter
-    if token_len == 0 or token_len > 2000:
+    if token_len == 0 or token_len > 251:
         continue
 
     doc = {
@@ -59,4 +47,3 @@ for count, doc in enumerate(docs):
     }
     res = es.index(index="robo04_index", doc_type="docs", id=_id, body=doc)
     print(count, res)
-
